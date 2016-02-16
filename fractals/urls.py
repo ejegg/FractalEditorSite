@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     # url(r'^fractaleditor/', include('fractaleditor.foo.urls')),
     
     url(r'save', views.save),
-    url(r'', views.index)
+    url(r'^$',views.index),
+    url(r'^(?P<id>\d+)$', views.index)
 )

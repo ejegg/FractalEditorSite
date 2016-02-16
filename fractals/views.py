@@ -12,14 +12,17 @@ def index(request, id = -1):
     
     if len(allFrac) == 0:
         context = Context({
-            'numPoints' : 200000,
+            'numPoints' : 500000,
             'name' : 'Sierpinski Pyramid',
             'serializedTransforms' : '0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 -0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 -0.5 0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.5 0.0 1.0'
         })
     else:
-        frac = allFrac.order_by('-id')[0]
+        id = int(id)
+        if id < 0 or id >= len(allFrac):
+            id = len(allFrac) - 1
+        frac = allFrac.order_by('id')[id]
         context = Context({
-            'numPoints' : 200000,
+            'numPoints' : 500000,
             'name' : frac.name,
             'serializedTransforms' : frac.transforms
         }) 
