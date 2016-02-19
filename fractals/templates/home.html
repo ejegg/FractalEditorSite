@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Fractal Editor</title>
+<style type="text/css">
+body {
+	font-family:sans-serif;
+}
+.fractal {
+	float:left;
+	width:200px;
+	min-height:100px;
+	text-align:center;
+}
+.fractal img {
+	max-height: 200px;
+}
+</style>
+</head>
+<body>
+<p>These are fractals created from <a href="https://en.wikipedia.org/wiki/Iterated_function_system">Iterated function systems</a>. You can see static images below (for newer ones, at least).  Click to see the fractal rendered in 3-d using WebGL.  You will need a computer with a decent graphics card.  Your phone may even render the fractal better than your computer.</p>
+<p>Create your own - <a href="/static/FractalEditor.apk">download the FractalEditor app for Android</a></p>
+{%for fractal in fractals %}
+    <div class="fractal"><a href="/fractal/{{fractal.id}}"><h4>{{fractal.name}}</h4>{% if fractal.hasthumbnail %}<img src="{{fractal.thumbnail.url}}">{% endif %}</a></div>
+{% endfor%}
+</body>

@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'fractaleditor.views.home', name='home'),
     # url(r'^fractaleditor/', include('fractaleditor.foo.urls')),
     url(r'^fractal/', include('fractals.urls')),
+    url(r'^$', 'fractaleditor.views.home', name='home'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
