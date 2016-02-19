@@ -9,10 +9,10 @@ import re
 def index(request, id = -1):
     template = loader.get_template('fractals/index.html')
     
-    allFrac = Fractal.objects.all();
+    numFrac = Fractal.objects.count();
     context = None
     
-    if len(allFrac) == 0:
+    if numFrac == 0:
         context = Context({
             'numPoints' : 500000,
             'name' : 'Sierpinski Pyramid',
@@ -20,9 +20,9 @@ def index(request, id = -1):
         })
     else:
         id = int(id)
-        if id < 0 or id >= len(allFrac):
-            id = len(allFrac) - 1
-        frac = allFrac.order_by('id')[id]
+        frac = Fractal.objects.get(id__exact=id)
+        if frac == None:
+            return HttpResponse('Fractal not found') #should be 404
         context = Context({
             'numPoints' : 500000,
             'name' : frac.name,
