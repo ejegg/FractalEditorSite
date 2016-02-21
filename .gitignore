@@ -1,4 +1,4 @@
 *.pyc
 log
-media
+media/frac_*
 db
