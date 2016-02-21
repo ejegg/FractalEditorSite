@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.template import Context, loader
 from django.conf import settings
 from models import Fractal
@@ -21,7 +22,7 @@ def index(request, id = -1):
     else:
         id = int(id)
         frac = Fractal.objects.get(id__exact=id)
-        if frac == None:
+        if frac is None:
             return HttpResponse('Fractal not found') #should be 404
         context = Context({
             'numPoints' : 500000,
@@ -29,6 +30,10 @@ def index(request, id = -1):
             'serializedTransforms' : frac.transforms
         }) 
     return HttpResponse(template.render(context))
+
+def app_link(request):
+    id = int(request.GET.get('id'))
+    return HttpResponseRedirect('/fractal/{0}'.format(id))
 
 @csrf_exempt
 def save(request, id = None):

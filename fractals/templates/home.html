@@ -22,6 +22,16 @@ body {
 <p>These are fractals created from <a href="https://en.wikipedia.org/wiki/Iterated_function_system">Iterated function systems</a>. You can see static images below (for newer ones, at least).  Click to see the fractal rendered in 3-d using WebGL.  You will need a computer with a decent graphics card.  Your phone may even render the fractal better than your computer.</p>
 <p>Create your own - <a href="/static/FractalEditor.apk">download the FractalEditor app for Android</a></p>
 {%for fractal in fractals %}
-    <div class="fractal"><a href="/fractal/{{fractal.id}}"><h4>{{fractal.name}}</h4>{% if fractal.hasthumbnail %}<img src="{{fractal.thumbnail.url}}">{% endif %}</a></div>
+    <div class="fractal">
+        <a href="/fractal/{{fractal.id}}">{{fractal.name}}</a>
+        {% if show_edit_links %}
+        <a href="/app?id={{fractal.id}}&name={{fractal.name}}&transforms={{fractal.transforms}}">(Edit)</a>
+        {% endif %}
+        {% if fractal.hasthumbnail %}
+        <a href="/fractal/{{fractal.id}}">
+            <img src="{{fractal.thumbnail.url}}">
+        </a>
+        {% endif %}
+    </div>
 {% endfor%}
 </body>
