@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Fractal Editor</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block body_block %}
 <h3>{{ name }}</h3>
 <canvas id="canvas" style="border: none;margin:auto auto" width="1000" height="700"></canvas>
 <script type="text/javascript" src="/static/glMatrix-0.9.5.min.js"></script>
@@ -56,5 +52,4 @@
 	var renderer = new Renderer(document.getElementById('canvas'), fractal);
 	renderer.start();
 </script>
-</body>
-</html>
+{% endblock %}
