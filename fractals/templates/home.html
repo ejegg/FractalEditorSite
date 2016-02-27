@@ -6,7 +6,7 @@
     <div class="fractal">
         <a href="/fractal/{{fractal.id}}">{{fractal.name}}</a>
         {% if show_edit_links %}
-        <a href="/app?id={{fractal.id}}&name={{fractal.name}}&thumbnail={{fractal.thumbnail.filename}}&transforms={{fractal.transforms}}">(Edit)</a>
+        <a href="fractaleditor://fractal/v1?id={{fractal.id}}&name={{fractal.name}}&thumbnail={{fractal.thumbnail.filename}}&transforms={{fractal.transforms}}">(Edit)</a>
         {% endif %}
         {% if fractal.hasthumbnail %}
         <a href="/fractal/{{fractal.id}}">
