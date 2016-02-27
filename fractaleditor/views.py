@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.template import Context, loader
+from django.template import RequestContext, loader
 from fractals.models import Fractal
 import re
 
@@ -15,7 +15,7 @@ def home(request, id = -1):
             fractal.hasthumbnail = False
         else:
             fractal.hasthumbnail = True
-    context = Context({
+    context = RequestContext(request, {
         'fractals' : allFrac,
         'show_edit_links' : is_android
     })

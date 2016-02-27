@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body_block %}
 <p>These are fractals created from <a href="https://en.wikipedia.org/wiki/Iterated_function_system">Iterated function systems</a>. You can see static images below.  Click to see the fractal rendered in 3-d using WebGL.  You will need a computer with a decent graphics card.  Your phone may even render the fractal better than your computer.</p>
-<p>Create your own - <a href="/static/FractalEditor.apk">download the FractalEditor app for Android</a></p>
+<p>Create your own - {{ app_link|safe }}</p>
 {%for fractal in fractals %}
     <div class="fractal">
         <a href="/fractal/{{fractal.id}}">{{fractal.name}}</a>

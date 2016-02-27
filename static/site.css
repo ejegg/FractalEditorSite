@@ -1,6 +1,10 @@
 body {
     font-family:sans-serif;
 }
+#content {
+    max-width: 1000px;
+    margin: auto;
+}
 .fractal {
     float:left;
     width:200px;
@@ -10,4 +14,8 @@ body {
 .fractal img {
     max-height: 200px;
 }
-
+footer {
+    padding-top: 1em;
+    text-align: center;
+    clear: both
+}

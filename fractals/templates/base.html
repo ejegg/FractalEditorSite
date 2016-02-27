@@ -25,6 +25,11 @@
         <meta name="theme-color" content="#ffffff">
     </head>
     <body>
+        <div id="content">
         {% block body_block %}{% endblock %}
+        </div>
+        <footer>
+            <p>{{ footer_text|safe }}</p>
+        </footer>
     </body>
 </html>
