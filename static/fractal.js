@@ -62,15 +62,15 @@ var Renderer = function(canvas, fractal) {
 		mvMatrix = mat4.create(),
 		pMatrix = mat4.create(),
 		lightMatrix = mat3.create(),
+        spinMatrix = mat4.create(),
+        rotationMatrix = mat4.create(),
 		lightAngle = 0,
 		shaderProgram,
 		pointBuffer,
-		lightAngle,
-	    rX = 0,
-	    rY = 0,
-	    rZ = 0,
-	    dX = 0,
-	    dY = 0;
+		lightAngle;
+
+    mat4.identity(spinMatrix);
+    mat4.identity(rotationMatrix);
 		
 	function initGL() {
 	    try {
@@ -168,7 +168,7 @@ var Renderer = function(canvas, fractal) {
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pointBuffer.itemSize, gl.FLOAT, false, 0, 0);
     }
 	
-    function drawScene(rotX,rotY,rotZ) {
+    function drawScene() {
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -178,36 +178,66 @@ var Renderer = function(canvas, fractal) {
 
         mat4.translate(mvMatrix, [0.0, 0.0, -4.0]);
   
-        mat4.rotate(mvMatrix,rotY,[0,1,0]);
-        mat4.rotate(mvMatrix,rotX,[1,0,0]);
+        // apply spin velocity to rotation matrix
+        mat4.multiply(rotationMatrix, spinMatrix);
+        // then apply rotation matrix to model view
+        mat4.multiply(mvMatrix, rotationMatrix);
         setMatrixUniforms();
 		lightAngle += 0.1;
         gl.drawArrays(gl.POINTS, 0, pointBuffer.numItems);
     }
 
-    document.onkeydown = function(e) { 
-	   switch(e.keyCode) {
-	      case 37: dY -= 0.01;
-	      	break;
-	      case 39: dY += 0.01; 
-	      	break;
-	      case 38: dX -= 0.01; 
-	      	break;
-	      case 40: dX += 0.01; 
-	      	break;
-	   }
-    };
+    function spin(dX, dY) {
+        var ir = mat4.create; // inverse rotation matrix
+        mat4.inverse(rotationMatrix, ir);
+        var xAxis = [ir[0],ir[1],ir[2]];
+        var yAxis = [ir[4],ir[5],ir[6]];
+        
+        mat4.rotate(spinMatrix,dX,yAxis);
+        mat4.rotate(spinMatrix,dY,xAxis);
+    }
+
+    function initInput() {
+        document.onkeydown = function(e) { 
+           switch(e.keyCode) {
+              case 37: spin(-0.01, 0); //left
+                break;
+              case 39: spin(0.01, 0); //right
+                break;
+              case 38: spin(0, -0.01); //up
+                break;
+              case 40: spin(0, 0.01); //down
+                break;
+              case 32: mat4.identity(spinMatrix); //space
+                break;
+           }
+        };
+        var mc = new Hammer.Manager(canvas, {
+            recognizers: [
+                [Hammer.Tap],
+                [Hammer.Swipe,{ direction: Hammer.DIRECTION_ALL }]
+            ]
+        });
+        mc.on("swipe", function(ev) {
+            spin( ev.velocityX / 20, ev.velocityY / 20 );
+        });
+        mc.on("tap", function(ev) {
+            // stop this crazy thing, I want to get off!
+            mat4.identity(spinMatrix);
+        });
+    }
 
     function start() {
         initGL(canvas);
         initShaders();
         initBuffers();
+        initInput();
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.disable(gl.DEPTH_TEST);
 		gl.enable(gl.BLEND);
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-        drawScene(rX, rY, rZ);
-    	setInterval(function() {rX += dX; rY+=dY; drawScene(rX,rY,rZ);}, 50); //20fps
+        drawScene();
+    	setInterval(function() {drawScene();}, 50); //20fps
     }
     
 	return {
