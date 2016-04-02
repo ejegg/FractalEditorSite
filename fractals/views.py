@@ -74,8 +74,13 @@ def save(request, id = None):
                           thumbnail = uploaded.name
                           )
         fractal.save()
+        id = fractal.id
         logger.debug('Saved fractal to db')
     except Exception as e:
         logger.exception(e)
+        return HttpResponse("Error: could not save fractal to db")
 
-    return HttpResponse("Saved!")
+    resp = '{{"success":true,"id":{0}}}'.format(id)
+    #TODO: use a json serializer
+    logger.debug(resp)
+    return HttpResponse(resp)
