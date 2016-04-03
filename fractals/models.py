@@ -1,6 +1,4 @@
 from django.db import models
-import pprint
-import logging
 
 class Fractal(models.Model):
     name = models.CharField(max_length=200)
