@@ -27,7 +27,8 @@ def index(request, id = -1):
         context = RequestContext(request, {
             'numPoints' : 500000,
             'name' : frac.name,
-            'serializedTransforms' : frac.transforms
+            'serializedTransforms' : frac.transforms,
+            'link' : frac.link
         }) 
     return HttpResponse(template.render(context))
 

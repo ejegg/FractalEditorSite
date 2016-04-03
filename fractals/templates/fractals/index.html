@@ -2,6 +2,7 @@
 
 {% block body_block %}
 <h3>{{ name }}</h3>
+{% if show_edit_links %}<a href="{{link}}">Open in the FractalEditor app</a><br/>{% endif %}
 <canvas id="canvas" style="border: none;margin:auto auto" width="1000" height="700"></canvas>
 <script type="text/javascript" src="/static/glMatrix-0.9.5.min.js"></script>
 <script type="text/javascript" src="/static/hammer.min.js"></script>
