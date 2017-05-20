@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^app$', 'fractals.views.app_link'),
     url(r'^(?P<path>android-chrome-[0-9x]+\.png|apple-touch-icon-[0-9a-z]+\.png|' +
             r'browserconfig.xml|favicon-[0-9x]+\.png|favicon.ico|manifest.json|' +
-            r'safari-pinned-tab.svg|mstile-[0-9x]+.png)$',
+            r'safari-pinned-tab.svg|mstile-[0-9x]+.png|.well-known/.*)$',
         'django.views.static.serve', {
             'document_root': project_root + '/static'
         }),
