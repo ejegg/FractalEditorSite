@@ -2,3 +2,5 @@
 log
 media/frac_*
 db
+fractaleditor/settings.py
+fractaleditor/wsgi.py
