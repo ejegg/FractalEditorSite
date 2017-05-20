@@ -76,8 +76,6 @@ var Renderer = function(canvas, fractal) {
 	    try {
             gl = canvas.getContext("experimental-webgl");
             gl.clearColor(0.0, 0.0, 0.0, 0.2);  
-            gl.viewportWidth = canvas.width;
-            gl.viewportHeight = canvas.height;
         } catch (e) { }
         if (!gl) {
             alert("Could not initialise WebGL, sorry :-(");
@@ -227,8 +225,17 @@ var Renderer = function(canvas, fractal) {
         });
     }
 
+    function setSize() {
+        var x = window.innerWidth - 8,
+            y = window.innerHeight - 8;
+        gl.viewportWidth = canvas.width = x;
+        gl.viewportHeight = canvas.height = y;
+    }
+
     function start() {
         initGL(canvas);
+        setSize();
+        window.addEventListener("resize", setSize);
         initShaders();
         initBuffers();
         initInput();

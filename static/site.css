@@ -1,5 +1,7 @@
 body {
     font-family:sans-serif;
+    padding:0;
+    margin:0;
 }
 #content {
     max-width: 800px;
@@ -18,4 +20,28 @@ footer {
     padding-top: 1em;
     text-align: center;
     clear: both
+}
+body.fullscreen footer {
+    position:absolute;
+    bottom:10px;
+    color:grey;
+}
+body.fullscreen footer a {
+    color:darkGrey;
+}
+canvas {
+    border: none;
+    margin: 0;
+}
+h3.fractalName {
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    padding:0;
+    margin:0;
+}
+h3.fractalName a {
+    color: grey;
 }

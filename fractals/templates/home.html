@@ -1,20 +1,22 @@
 {% extends 'base.html' %}
 {% block body_block %}
-<p>These are fractals created from <a href="https://en.wikipedia.org/wiki/Iterated_function_system">Iterated function systems</a>. You can see static images below.  Click to see the fractal rendered in 3-d using WebGL.  You will need a computer with a decent graphics card.  Your phone may even render the fractal better than your computer.</p>
-<p>Create your own - {{ app_link|safe }}</p>
-{%for fractal in fractals %}
-    <div class="fractal">
-        <div class="caption">
-            <a href="/fractal/{{fractal.id}}">{{fractal.name}}</a>
-            {% if show_edit_links %}
-            <a href="{{fractal.link}}">(Edit)</a>
+<div id="content">
+    <p>These are fractals created from <a href="https://en.wikipedia.org/wiki/Iterated_function_system">Iterated function systems</a>. You can see static images below.  Click to see the fractal rendered in 3-d using WebGL.  You will need a computer with a decent graphics card.  Your phone may even render the fractal better than your computer.</p>
+    <p>Create your own - {{ app_link|safe }}</p>
+    {%for fractal in fractals %}
+        <div class="fractal">
+            <div class="caption">
+                <a href="/fractal/{{fractal.id}}">{{fractal.name}}</a>
+                {% if show_edit_links %}
+                <a href="{{fractal.link}}">(Edit)</a>
+                {% endif %}
+            </div>
+            {% if fractal.hasthumbnail %}
+            <a href="/fractal/{{fractal.id}}">
+                <img src="{{fractal.thumbnail.url}}">
+            </a>
             {% endif %}
         </div>
-        {% if fractal.hasthumbnail %}
-        <a href="/fractal/{{fractal.id}}">
-            <img src="{{fractal.thumbnail.url}}">
-        </a>
-        {% endif %}
-    </div>
-{% endfor%}
+    {% endfor%}
+</div>
 {% endblock %}
