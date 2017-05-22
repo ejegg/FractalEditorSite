@@ -13,7 +13,7 @@
             </div>
             {% if fractal.hasthumbnail %}
             <a href="/fractal/{{fractal.id}}">
-                <img src="{{fractal.thumbnail.url}}">
+                <img src="{{fractal.smallthumbsrc}}" srcset="{{fractal.srcset}}">
             </a>
             {% endif %}
         </div>

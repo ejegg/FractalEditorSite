@@ -4,6 +4,7 @@ from django.template import RequestContext, loader
 from django.conf import settings
 from models import Fractal
 from django.views.decorators.csrf import csrf_exempt
+import util.image
 import logging
 import re
 
@@ -63,6 +64,8 @@ def save(request, id = None):
         with open(filename, 'w') as thumbfile:
             for chunk in uploaded.chunks():
                 thumbfile.write(chunk)
+
+        util.image.makethumbnails(filename)
 
         logger.debug('Wrote thumbnail, saving fractal to database')
         fractal = Fractal(
