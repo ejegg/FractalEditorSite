@@ -14,6 +14,7 @@ If you want to run the software locally, clone this repository and:
 * pip install -r requirements.txt
 * cp fractaleditor/settings.example.py fractaleditor/settings.py
 * python manage.py migrate
+* python manage.py loaddata fractals/fixtures/fractal.json
 * python manage.py runserver
 
 ## License

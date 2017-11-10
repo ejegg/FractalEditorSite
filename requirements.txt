@@ -1,3 +1,2 @@
-django >= 1.7.0, < 1.7.999
+django >= 1.10.0, < 1.10.999
 pillow
-wsgi
