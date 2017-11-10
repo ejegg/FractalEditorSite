@@ -18,8 +18,10 @@ import sys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fractaleditor.settings")
 
-path = '/path/to/fractaleditor'
-if path not in sys.path:
+# Calculate the project's base directory.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if BASE_DIR not in sys.path:
   sys.path.append(path)
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
