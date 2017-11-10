@@ -18,6 +18,9 @@ urlpatterns = [
         django.views.static.serve, {
             'document_root': project_root + '/static'
         }),
+    url(r'^(?P<path>static/.*)', django.views.static.serve, {
+            'document_root': project_root
+        }),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
