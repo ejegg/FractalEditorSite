@@ -1,5 +1,11 @@
 # Django settings for fractaleditor project.
 
+import os
+
+
+# Calculate the project's base directory.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -52,12 +58,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/path/to/media/'
+MEDIA_ROOT = BASE_DIR + '/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://fractaleditor.dev/media/'
+MEDIA_URL = 'http://127.0.0.1:8000/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -167,7 +173,7 @@ LOGGING = {
         'logfile' : {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename' : '/path/to/log',
+            'filename' : '/tmp/fractals.log',
             'maxBytes': 50000,
             'backupCount' : 5,
             'formatter': 'standard'
