@@ -1,22 +1,24 @@
 from django.db import models
 
+
 class Fractal(models.Model):
     name = models.CharField(max_length=200)
     transformCount = models.IntegerField()
     transforms = models.TextField()
     thumbnailWidth = models.IntegerField()
     thumbnailHeight = models.IntegerField()
-    thumbnail = models.ImageField(upload_to='fractalThumbs', width_field='thumbnailWidth', height_field='thumbnailHeight')
+    thumbnail = models.ImageField(upload_to='fractalThumbs', width_field='thumbnailWidth',
+                                  height_field='thumbnailHeight')
 
     def _get_smallthumbsrc(self):
-	return self.thumbnail.url.replace('.png', 'x1.png')
+        return self.thumbnail.url.replace('.png', 'x1.png')
 
     smallthumbsrc = property(_get_smallthumbsrc)
 
     def _get_srcset(self):
-	return self.thumbnail.url.replace('.png', 'x1.png') + ' 1x, ' + \
-            self.thumbnail.url.replace('.png', 'x1.5.png') + ' 1.5x, ' + \
-            self.thumbnail.url.replace('.png', 'x2.png') + ' 2x'
+        return self.thumbnail.url.replace('.png', 'x1.png') + ' 1x, ' + \
+               self.thumbnail.url.replace('.png', 'x1.5.png') + ' 1.5x, ' + \
+               self.thumbnail.url.replace('.png', 'x2.png') + ' 2x'
 
     srcset = property(_get_srcset)
 
@@ -25,4 +27,3 @@ class Fractal(models.Model):
             self.id, self.name, self.thumbnail, self.transforms)
 
     link = property(_get_link)
-

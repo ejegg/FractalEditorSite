@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from fractals.models import Fractal
 
-def home(request, id = -1):
+
+def home(request):
     template = loader.get_template('home.html')
 
     allFrac = Fractal.objects.all().order_by('-id')
@@ -12,6 +13,6 @@ def home(request, id = -1):
         else:
             fractal.hasthumbnail = True
     context = RequestContext(request, {
-        'fractals' : allFrac
+        'fractals': allFrac
     })
     return HttpResponse(template.render(context))

@@ -8,37 +8,39 @@ import util.image
 import logging
 import re
 
-def index(request, id = -1):
+
+def index(request, id=-1):
     template = loader.get_template('fractals/index.html')
-    
-    numFrac = Fractal.objects.count();
-    context = None
-    
+
+    numFrac = Fractal.objects.count()
+
     if numFrac == 0:
         context = RequestContext(request, {
-            'numPoints' : 500000,
-            'name' : 'Sierpinski Pyramid',
-            'serializedTransforms' : '0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 -0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 -0.5 0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.5 0.0 1.0'
+            'numPoints': 500000,
+            'name': 'Sierpinski Pyramid',
+            'serializedTransforms': '0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 -0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 -0.5 0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.5 0.0 1.0'
         })
     else:
         id = int(id)
         frac = Fractal.objects.get(id__exact=id)
         if frac is None:
-            return HttpResponse('Fractal not found') #should be 404
+            return HttpResponse('Fractal not found')  # should be 404
         context = RequestContext(request, {
-            'numPoints' : 500000,
-            'name' : frac.name,
-            'serializedTransforms' : frac.transforms,
-            'link' : frac.link
-        }) 
+            'numPoints': 500000,
+            'name': frac.name,
+            'serializedTransforms': frac.transforms,
+            'link': frac.link
+        })
     return HttpResponse(template.render(context))
+
 
 def app_link(request):
     id = int(request.GET.get('id'))
     return HttpResponseRedirect('/fractal/{0}'.format(id))
 
+
 @csrf_exempt
-def save(request, id = None):
+def save(request, id=None):
     logger = logging.getLogger('django')
     name = request.POST.get('name', '')
     serializedTransforms = request.POST.get('serializedTransforms', '')
@@ -52,7 +54,7 @@ def save(request, id = None):
     if name == '' or serializedTransforms == '':
         return HttpResponse("Error: blank name or transforms")
 
-    transformParts = serializedTransforms.split(' ');
+    transformParts = serializedTransforms.split(' ')
     if len(transformParts) % 16 != 0:
         return HttpResponse("Error: transform count must be a multiple of 16")
 
@@ -69,14 +71,14 @@ def save(request, id = None):
 
         logger.debug('Wrote thumbnail, saving fractal to database')
         fractal = Fractal(
-                          id = id,
-                          name= name,
-                          transformCount = numTransforms,
-                          transforms = serializedTransforms,
-                          thumbnailWidth = 0,
-                          thumbnailHeight = 0,
-                          thumbnail = uploaded.name
-                          )
+            id=id,
+            name=name,
+            transformCount=numTransforms,
+            transforms=serializedTransforms,
+            thumbnailWidth=0,
+            thumbnailHeight=0,
+            thumbnail=uploaded.name
+        )
         fractal.save()
         id = fractal.id
         logger.debug('Saved fractal to db')
@@ -85,6 +87,6 @@ def save(request, id = None):
         return HttpResponse("Error: could not save fractal to db")
 
     resp = '{{"success":true,"id":{0}}}'.format(id)
-    #TODO: use a json serializer
+    # TODO: use a json serializer
     logger.debug(resp)
     return HttpResponse(resp)

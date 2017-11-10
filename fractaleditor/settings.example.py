@@ -3,8 +3,8 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-FOOTER_TEXT = 'Created by me!';
-APP_LINK = '<a href="/static/FractalEditor.apk">Download the FractalEditor app</a>';
+FOOTER_TEXT = 'Created by me!'
+APP_LINK = '<a href="/static/FractalEditor.apk">Download the FractalEditor app</a>'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
