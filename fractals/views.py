@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.template import RequestContext, loader
+from django.template import loader
 from django.conf import settings
 from models import Fractal
 from django.views.decorators.csrf import csrf_exempt
@@ -15,22 +15,22 @@ def index(request, id=-1):
     numFrac = Fractal.objects.count()
 
     if numFrac == 0:
-        context = RequestContext(request, {
+        context = {
             'numPoints': 500000,
             'name': 'Sierpinski Pyramid',
             'serializedTransforms': '0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 -0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.5 -0.5 -0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 -0.5 0.5 1.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.0 0.0 0.5 0.0 0.0 0.5 0.0 1.0'
-        })
+        }
     else:
         id = int(id)
         frac = Fractal.objects.get(id__exact=id)
         if frac is None:
             return HttpResponse('Fractal not found')  # should be 404
-        context = RequestContext(request, {
+        context = {
             'numPoints': 500000,
             'name': frac.name,
             'serializedTransforms': frac.transforms,
             'link': frac.link
-        })
+        }
     return HttpResponse(template.render(context))
 
 

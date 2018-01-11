@@ -12,7 +12,7 @@ def home(request):
             fractal.hasthumbnail = False
         else:
             fractal.hasthumbnail = True
-    context = RequestContext(request, {
+    context = {
         'fractals': allFrac
-    })
+    }
     return HttpResponse(template.render(context))
